@@ -3,14 +3,18 @@ package main
 import (
 	"flag"
 	"fmt"
+
+	"github.com/MartinWilkerson/list-squashed-merges/azuredevops"
 )
 
 func main() {
-	projectURLPtr := flag.String("projecturl", "", "URL of the project to check")
+	organisationPtr := flag.String("organisation", "", "The azure devops organisation to check")
+	projectNamePtr := flag.String("projectname", "", "The azure devops project to check")
 	apiKeyPtr := flag.String("apikey", "", "API key to use")
 
 	flag.Parse()
 
-	fmt.Println("URL: ", *projectURLPtr)
-	fmt.Println("Key: ", *apiKeyPtr)
+	prs := azuredevops.GetPullRequests(*organisationPtr, *projectNamePtr, *apiKeyPtr)
+
+	fmt.Println(prs)
 }
