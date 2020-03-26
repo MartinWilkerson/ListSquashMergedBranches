@@ -74,7 +74,7 @@ type pullRequestResponse struct {
 
 // GetPullRequests returns all pull requests for the specified project
 func GetPullRequests(organisation string, project string, personalAccessToken string) []PullRequest {
-	url := fmt.Sprintf("https://dev.azure.com/%s/%s/_apis/git/pullrequests?api-version=5.1", organisation, project)
+	url := fmt.Sprintf("https://dev.azure.com/%s/%s/_apis/git/pullrequests?searchCriteria.status=all&api-version=5.1", organisation, project)
 
 	client := &http.Client{}
 
