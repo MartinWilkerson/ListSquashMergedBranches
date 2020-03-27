@@ -21,7 +21,7 @@ type repositoryResponse struct {
 
 // GetRepositories returns a list of repositories in the provided organisation and project
 func GetRepositories(organisation string, project string, personalAccessToken string) []Repository {
-	url := fmt.Sprintf("https://dev.azure.com/%s/%s/_apis/git/repositories?api-version=5.1", organisation, project)
+	url := fmt.Sprintf("https://dev.azure.com/%s/%s/_apis/git/repositories?includeHidden=true&api-version=5.1", organisation, project)
 
 	response := makeRequest(url, personalAccessToken)
 
