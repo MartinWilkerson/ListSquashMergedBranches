@@ -88,8 +88,8 @@ type Ref struct {
 }
 
 type refResponse struct {
-	count int
-	value []Ref
+	Count int   `json:"count"`
+	Value []Ref `json:"value"`
 }
 
 // GetRefs gets all refs from a repository in azure devops
@@ -103,7 +103,7 @@ func GetRefs(organisation string, project string, repository string, personalAcc
 	refResponse := refResponse{}
 	decoder.Decode(&refResponse)
 
-	return refResponse.value
+	return refResponse.Value
 }
 
 func makeRequest(url string, personalAccessToken string) *http.Response {
