@@ -14,7 +14,15 @@ func main() {
 
 	flag.Parse()
 
+	repos := azuredevops.GetRepositories(*organisationPtr, *projectNamePtr, *apiKeyPtr)
 	prs := azuredevops.GetPullRequests(*organisationPtr, *projectNamePtr, *apiKeyPtr)
+
+	for _, repo := range repos {
+		repoRefs := azuredevops.GetRefs(*organisationPtr, *projectNamePtr, repo.ID, *apiKeyPtr)
+		for _, ref := range repoRefs {
+			fmt.Printf("%s %s", ref.ObjectID, ref.Name)
+		}
+	}
 
 	for _, pr := range prs {
 		if pr.MergeStatus != "succeeded" {
