@@ -43,17 +43,22 @@ func main() {
 		fmt.Printf("Source: [%s] %s\n", sourceBranch, sourceCommit)
 	}
 
-	// for _, pr := range prs {
-	// 	if pr.MergeStatus != "succeeded" {
-	// 		continue
-	// 	}
-	// 	sourceRepositoryId := pr.Repository.ID
-	// 	sourceCommit := pr.LastMergeSourceCommit.CommitID
-	// 	sourceBranch := pr.SourceRefName
+	for _, pr := range prs {
+		if pr.MergeStatus != "succeeded" {
+			continue
+		}
+		sourceRepositoryID := pr.Repository.ID
+		sourceCommit := pr.LastMergeSourceCommit.CommitID
+		sourceBranch := pr.SourceRefName
 
-	// 	repoRefs := refs[sourceRepositoryId]
+		repoRefs := refs[sourceRepositoryID]
 
-	// }
+		for _, ref := range repoRefs {
+			if ref.Name == sourceBranch && ref.ObjectID == sourceCommit {
+				fmt.Printf("Repository: %s, Branch: %s", repoDict[sourceRepositoryID].Name, sourceBranch)
+			}
+		}
+	}
 }
 
 /*
