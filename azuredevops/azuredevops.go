@@ -95,3 +95,13 @@ func GetPullRequests(organisation string, project string, personalAccessToken st
 
 	return pullRequestResponse.Value
 }
+
+type Ref struct {
+	Name     string `json:"Name"`
+	ObjectID string `json:"objectId"`
+	Creator  User   `json:"creator"`
+}
+
+func GetRefs(organisation string, project string, apikey string) {
+
+}
