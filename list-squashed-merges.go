@@ -39,3 +39,17 @@ func main() {
 	}
 
 }
+
+/*
+Example output with a single still-existing branch with a PR that squash-merged it:
+
+Repositories:
+squash-merge-test:
+36ce32ad4187f2d5f4d6c88acabf53ee3fdbdebb refs/heads/do-something
+d8d74bb41d701d2b2167f32c31115e678c7531f8 refs/heads/master
+
+Pull requests:
+Source: [refs/heads/do-something] 36ce32ad4187f2d5f4d6c88acabf53ee3fdbdebb
+
+Example output with a single deleted branch with a PR that squash-merged it:
+*/
