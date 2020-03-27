@@ -15,8 +15,8 @@ type Repository struct {
 }
 
 type repositoryResponse struct {
-	count int
-	value []Repository
+	Count int          `json:"count"`
+	Value []Repository `json:"value"`
 }
 
 // GetRepositories returns a list of repositories in the provided organisation and project
@@ -29,5 +29,5 @@ func GetRepositories(organisation string, project string, personalAccessToken st
 	repositoriesResponse := repositoryResponse{}
 	decoder.Decode(&repositoriesResponse)
 
-	return repositoriesResponse.value
+	return repositoriesResponse.Value
 }
