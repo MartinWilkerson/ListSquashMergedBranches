@@ -20,27 +20,10 @@ func main() {
 
 	refs := make(map[string][]azuredevops.Ref)
 	repoDict := make(map[string]azuredevops.Repository)
-	fmt.Println("Repositories:")
 	for _, repo := range repos {
-		fmt.Printf("%s:\n", repo.Name)
 		repoDict[repo.ID] = repo
 		repoRefs := azuredevops.GetRefs(*organisationPtr, *projectNamePtr, repo.ID, *apiKeyPtr)
 		refs[repo.ID] = repoRefs
-		for _, ref := range repoRefs {
-
-			fmt.Printf("%s %s\n", ref.ObjectID, ref.Name)
-		}
-	}
-	fmt.Println()
-
-	fmt.Println("Pull requests:")
-	for _, pr := range prs {
-		if pr.MergeStatus != "succeeded" {
-			continue
-		}
-		sourceCommit := pr.LastMergeSourceCommit.CommitID
-		sourceBranch := pr.SourceRefName
-		fmt.Printf("Source: [%s] %s\n", sourceBranch, sourceCommit)
 	}
 
 	for _, pr := range prs {
