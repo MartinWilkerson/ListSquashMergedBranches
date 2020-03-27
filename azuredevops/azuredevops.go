@@ -13,15 +13,8 @@ import (
 type Project struct {
 	ID    string `json:"id"`
 	Name  string `json:"name"`
+	URL   string `json:"url"`
 	State string `json:"state"`
-}
-
-// Repository is an azure devops repository
-type Repository struct {
-	ID      string  `json:"id"`
-	Name    string  `json:"name"`
-	URL     string  `json:"url"`
-	Project Project `json:"project"`
 }
 
 // User is an azure devops user
@@ -76,6 +69,44 @@ type pullRequestResponse struct {
 func GetPullRequests(organisation string, project string, personalAccessToken string) []PullRequest {
 	url := fmt.Sprintf("https://dev.azure.com/%s/%s/_apis/git/pullrequests?searchCriteria.status=all&api-version=5.1", organisation, project)
 
+	response := makeRequest(url, personalAccessToken)
+
+	decoder := json.NewDecoder(response.Body)
+
+	pullRequestResponse := pullRequestResponse{}
+	decoder.Decode(&pullRequestResponse)
+
+	return pullRequestResponse.Value
+}
+
+// Ref represents a branch or tag in azure devops
+type Ref struct {
+	Name     string `json:"Name"`
+	ObjectID string `json:"objectId"`
+	Creator  User   `json:"creator"`
+	URL      string `json:"url"`
+}
+
+type refResponse struct {
+	count int
+	value []Ref
+}
+
+// GetRefs gets all refs from a repository in azure devops
+func GetRefs(organisation string, project string, repository string, personalAccessToken string) []Ref {
+	url := fmt.Sprintf("https://dev.azure.com/%s/%s/_apis/git/repositories/%s/refs?api-version=5.1", organisation, project, repository)
+
+	response := makeRequest(url, personalAccessToken)
+
+	decoder := json.NewDecoder(response.Body)
+
+	refResponse := refResponse{}
+	decoder.Decode(&refResponse)
+
+	return refResponse.value
+}
+
+func makeRequest(url string, personalAccessToken string) *http.Response {
 	client := &http.Client{}
 
 	request, err := http.NewRequest("GET", url, nil)
@@ -89,19 +120,5 @@ func GetPullRequests(organisation string, project string, personalAccessToken st
 		log.Fatal(err)
 	}
 
-	decoder := json.NewDecoder(response.Body)
-	pullRequestResponse := pullRequestResponse{}
-	decoder.Decode(&pullRequestResponse)
-
-	return pullRequestResponse.Value
-}
-
-type Ref struct {
-	Name     string `json:"Name"`
-	ObjectID string `json:"objectId"`
-	Creator  User   `json:"creator"`
-}
-
-func GetRefs(organisation string, project string, apikey string) {
-
+	return response
 }
