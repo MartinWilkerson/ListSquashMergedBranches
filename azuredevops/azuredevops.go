@@ -107,6 +107,8 @@ func GetRefs(organisation string, project string, repository string, personalAcc
 }
 
 func makeRequest(url string, personalAccessToken string) *http.Response {
+	//log.Printf("Making request to %s", url)
+
 	client := &http.Client{}
 
 	request, err := http.NewRequest("GET", url, nil)
@@ -119,6 +121,12 @@ func makeRequest(url string, personalAccessToken string) *http.Response {
 	if err != nil {
 		log.Fatal(err)
 	}
+
+	// bodyDump, err := httputil.DumpResponse(response, true)
+	// if err != nil {
+	// 	log.Fatal(err)
+	// }
+	// log.Println(string(bodyDump))
 
 	return response
 }
