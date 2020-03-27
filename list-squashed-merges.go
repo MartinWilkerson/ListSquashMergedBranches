@@ -42,6 +42,17 @@ func main() {
 		fmt.Printf("Source: [%s] %s\n", sourceBranch, sourceCommit)
 	}
 
+	// for _, pr := range prs {
+	// 	if pr.MergeStatus != "succeeded" {
+	// 		continue
+	// 	}
+	// 	sourceRepositoryId := pr.Repository.ID
+	// 	sourceCommit := pr.LastMergeSourceCommit.CommitID
+	// 	sourceBranch := pr.SourceRefName
+
+	// 	repoRefs := refs[sourceRepositoryId]
+
+	// }
 }
 
 /*
