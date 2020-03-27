@@ -16,5 +16,13 @@ func main() {
 
 	prs := azuredevops.GetPullRequests(*organisationPtr, *projectNamePtr, *apiKeyPtr)
 
-	fmt.Println(prs)
+	for _, pr := range prs {
+		if pr.MergeStatus != "succeeded" {
+			continue
+		}
+		sourceCommit := pr.LastMergeSourceCommit.CommitID
+		sourceBranch := pr.SourceRefName
+		fmt.Printf("Source: [%s] %s\n", sourceBranch, sourceCommit)
+	}
+
 }
